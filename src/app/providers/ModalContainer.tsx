@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 
-import { useModalStore } from "@/shared/store/modalStore";
+import { useModalStore } from "@/shared/stores/modalStore";
 
 import { BsX } from "react-icons/bs";
 

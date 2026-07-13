@@ -1,4 +1,4 @@
-import { useModalStore } from "@/shared/store/modalStore";
+import { useModalStore } from "@/shared/stores/modalStore";
 
 import { Button } from "@/shared/components/Button";
 
