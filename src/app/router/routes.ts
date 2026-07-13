@@ -4,7 +4,7 @@ import { NotFoundPage } from "@/pages/NotFoundPage";
 import { HomePage } from "@/pages/HomePage";
 import { ProjectPage } from "@/pages/ProjectPage";
 
-import { ROUTE_PATHS } from "./paths.type";
+import { ROUTE_PATHS } from "./paths";
 
 export const routes = [
     {

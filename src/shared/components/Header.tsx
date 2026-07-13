@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 
 import { Logo } from "./Logo";
 
-import { ROUTE_PATHS } from "@/app/router/paths.type";
+import { ROUTE_PATHS } from "@/app/router/paths";
 
 export function Header() {
     return (
