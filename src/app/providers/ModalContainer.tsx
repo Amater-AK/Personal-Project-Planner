@@ -1,0 +1,29 @@
+import { createPortal } from "react-dom";
+
+import { useModalStore } from "@/shared/store/modalStore";
+
+import { BsX } from "react-icons/bs";
+
+import { Modal } from "@/shared/components/Modal";
+import { Button } from "@/shared/components/Button";
+
+export function ModalContainer() {
+    const isOpen = useModalStore((state) => state.isOpen);
+    const content = useModalStore((state) => state.content);
+    const closeModal = useModalStore((state) => state.closeModal);
+
+    return createPortal(
+        <Modal isOpen={isOpen} className="wrapper-modal rounded-medium" onClose={closeModal}>
+            <div className="p-2">
+                <header className="flex justify-end mb-2">
+                    <Button intent="regular" onlyIcon={true} onClick={closeModal}>
+                        <BsX />
+                    </Button>
+                </header>
+
+                {content}
+            </div>
+        </Modal>,
+        document.getElementById("modals"),
+    );
+}
