@@ -1,12 +1,8 @@
-import { Link } from "react-router";
+import { buttonStyles, type ButtonVariants } from "@/shared/styles/buttonStyles";
 
-import { buttonStyles, type ButtonVariants } from "../styles/buttonStyles";
+interface Props extends React.ComponentProps<"button">, ButtonVariants {}
 
-interface Props extends React.ComponentProps<"a">, ButtonVariants {
-    to: string;
-}
-
-export function LinkButton({ children, className, to, ...props }: Props) {
+export function Button({ children, className, ...props }: Props) {
     const variantProps: Record<string, any> = {};
     const nativeProps: Record<string, any> = {};
 
@@ -21,8 +17,8 @@ export function LinkButton({ children, className, to, ...props }: Props) {
     });
 
     return (
-        <Link className={buttonStyles({ ...variantProps, className })} to={to} {...nativeProps}>
+        <button className={buttonStyles({ ...variantProps, className })} {...nativeProps}>
             {children}
-        </Link>
+        </button>
     );
 }

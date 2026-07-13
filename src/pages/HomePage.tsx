@@ -1,6 +1,6 @@
 import { useModalStore } from "@/shared/stores/modalStore";
 
-import { Button } from "@/shared/components/Button";
+import { Button } from "@/shared/components/ui/Button";
 
 export function HomePage() {
     const openModal = useModalStore((state) => state.openModal);

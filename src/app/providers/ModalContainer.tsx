@@ -4,8 +4,8 @@ import { useModalStore } from "@/shared/stores/modalStore";
 
 import { BsX } from "react-icons/bs";
 
-import { Modal } from "@/shared/components/Modal";
-import { Button } from "@/shared/components/Button";
+import { Modal } from "@/shared/components/ui/Modal";
+import { Button } from "@/shared/components/ui/Button";
 
 export function ModalContainer() {
     const isOpen = useModalStore((state) => state.isOpen);
