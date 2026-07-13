@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { ModalContainer } from "./providers/ModalContainer";
+import { ModalProvider } from "./providers/ModalProvider";
 
 import { routes } from "./router/routes";
 
@@ -10,7 +10,7 @@ const router = createBrowserRouter(routes);
 export function App() {
     return (
         <ErrorBoundary fallback="Global Error">
-            <ModalContainer />
+            <ModalProvider />
             <RouterProvider router={router} />
         </ErrorBoundary>
     );

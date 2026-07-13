@@ -7,7 +7,7 @@ import { BsX } from "react-icons/bs";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Button } from "@/shared/components/ui/Button";
 
-export function ModalContainer() {
+export function ModalProvider() {
     const isOpen = useModalStore((state) => state.isOpen);
     const content = useModalStore((state) => state.content);
     const closeModal = useModalStore((state) => state.closeModal);
