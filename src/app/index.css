@@ -49,6 +49,7 @@
     --color-blue-500: hsl(228, 4%, 48%);
     --color-blue-600: hsl(235, 6%, 39%);
     --color-blue-700: hsl(231, 9%, 28%);
+    --color-blue-750: hsl(229, 22%, 20%);
     --color-blue-800: hsl(228, 18%, 16%);
     --color-blue-900: hsl(228, 26%, 15%);
     --color-blue-950: hsl(227, 39%, 9%);
@@ -123,10 +124,10 @@
             --color-text-secondary: var(--color-sand-400);
             --color-text-info: var(--color-sand-600);
 
-            --color-input-bg: var(--color-blue-700);
+            --color-input-bg: var(--color-blue-750);
             --color-input-text: var(--color-sand-300);
             --color-input-placeholder: var(--color-sand-600);
-            --color-input-border: var(--color-gray-200);
+            --color-input-border: var(--color-blue-700);
 
             --color-button-primary-bg: var(--color-sand-300);
             --color-button-primary-text: var(--color-blue-800);
@@ -142,10 +143,10 @@
             --color-button-secondary-text-hover: var(--color-sand-300);
             --color-button-secondary-border-hover: var(--color-sand-300);
 
-            --color-button-regular-bg: var(--color-blue-700);
+            --color-button-regular-bg: var(--color-blue-800);
             --color-button-regular-text: var(--color-sand-600);
-            --color-button-regular-border: var(--color-gray-200);
-            --color-button-regular-bg-hover: var(--color-blue-700);
+            --color-button-regular-border: var(--color-blue-600);
+            --color-button-regular-bg-hover: var(--color-blue-800);
             --color-button-regular-text-hover: var(--color-sand-300);
             --color-button-regular-border-hover: var(--color-sand-300);
 
@@ -156,7 +157,7 @@
             --color-button-danger-text-hover: var(--color-red-200);
             --color-button-danger-border-hover: var(--color-red-400);
 
-            --color-border: var(--color-gray-200);
+            --color-border: var(--color-blue-700);
 
             --color-outline: var(--color-sand-300);
 
