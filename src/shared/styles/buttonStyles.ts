@@ -5,12 +5,12 @@ export const buttonStyles = tv({
     variants: {
         intent: {
             primary:
-                "text-button-primary-text bg-button-primary-bg border-button-primary-border hover-button-primary-text-hover hover:bg-button-primary-bg-hover hover:border-button-primary-border-hover",
+                "text-button-primary-text bg-button-primary-bg border-button-primary-border hover:text-button-primary-text-hover hover:bg-button-primary-bg-hover hover:border-button-primary-border-hover",
             secondary:
-                "text-button-secondary-text bg-button-secondary-bg border-button-secondary-border hover-button-secondary-text-hover hover:bg-button-secondary-bg-hover hover:border-button-secondary-border-hover",
+                "text-button-secondary-text bg-button-secondary-bg border-button-secondary-border hover:text-button-secondary-text-hover hover:bg-button-secondary-bg-hover hover:border-button-secondary-border-hover",
             regular:
-                "text-button-regular-text bg-button-regular-bg border-button-regular-border hover-button-regular-text-hover hover:bg-button-regular-bg-hover hover:border-button-regular-border-hover",
-            danger: "text-button-danger-text bg-button-danger-bg border-button-danger-border hover-button-danger-text-hover hover:bg-button-danger-bg-hover hover:border-button-danger-border-hover",
+                "text-button-regular-text bg-button-regular-bg border-button-regular-border hover:text-button-regular-text-hover hover:bg-button-regular-bg-hover hover:border-button-regular-border-hover",
+            danger: "text-button-danger-text bg-button-danger-bg border-button-danger-border hover:text-button-danger-text-hover hover:bg-button-danger-bg-hover hover:border-button-danger-border-hover",
         },
         width: {
             content: "",
