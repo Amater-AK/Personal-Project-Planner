@@ -1,6 +1,8 @@
 import { useModalStore } from "@/shared/stores/modalStore";
 
-import { Button } from "@/shared/components/ui/Button";
+import { ProjectList } from "@/features/projects/components/ProjectList";
+
+import { type Project } from "@/features/projects/types/project.type";
 
 export function HomePage() {
     const openModal = useModalStore((state) => state.openModal);
@@ -9,13 +11,14 @@ export function HomePage() {
         openModal(<p>Test text</p>);
     }
 
+    const PROJECTS: Project[] = [
+        { id: "1", title: "project 1", createdAt: 1784031001246 },
+        { id: "2", title: "project 2", createdAt: 1784030001246 },
+    ];
+
     return (
         <div>
-            <h1>Home</h1>
-            <br />
-            <Button intent="primary" onClick={handleTestModal}>
-                Open modal
-            </Button>
+            <ProjectList projects={PROJECTS} />
         </div>
     );
 }
