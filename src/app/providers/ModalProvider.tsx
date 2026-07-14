@@ -13,7 +13,11 @@ export function ModalProvider() {
     const closeModal = useModalStore((state) => state.closeModal);
 
     return createPortal(
-        <Modal isOpen={isOpen} className="wrapper-modal rounded-medium" onClose={closeModal}>
+        <Modal
+            isOpen={isOpen}
+            className="wrapper-modal text-text-primary bg-surface-primary border border-border rounded-medium"
+            onClose={closeModal}
+        >
             <div className="p-2">
                 <header className="flex justify-end mb-2">
                     <Button intent="regular" onlyIcon={true} onClick={closeModal}>
