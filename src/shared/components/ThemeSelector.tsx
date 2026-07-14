@@ -53,7 +53,7 @@ export function ThemeSelector() {
     }, [THEMES]);
 
     return (
-        <div className="flex items-center bg-surface-secondary border border-border rounded-md overflow-clip">
+        <div className="flex items-center bg-input-bg border border-input-border rounded-medium">
             {items.map((item) => (
                 <ThemeItem
                     key={item.id}
@@ -85,7 +85,7 @@ function ThemeItem({ item, checked, onChange }: ThemeItemProps) {
             />
             <label
                 htmlFor={item.id}
-                className={`flex items-center gap-2 p-2 cursor-pointer transition-colors duration-300 ${checked ? "text-red-500" : ""}`}
+                className={`flex items-center gap-2 p-2 text-input-placeholder cursor-pointer transition-colors duration-300 hover:text-input-text ${checked ? "text-input-text" : ""}`}
                 title={item?.title}
             >
                 {item.content}
