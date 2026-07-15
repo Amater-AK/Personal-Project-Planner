@@ -186,6 +186,10 @@
         @apply overflow-hidden text-ellipsis whitespace-nowrap;
     }
 
+    .scrollbar {
+        @apply [scrollbar-color:var(--color-outline)_var(--color-border)] [scrollbar-width:thin] [scrollbar-gutter:stable];
+    }
+
     .wrapper {
         inline-size: min(var(--content-max-width), 100% - 2 * 0.5rem);
         margin-inline: auto;

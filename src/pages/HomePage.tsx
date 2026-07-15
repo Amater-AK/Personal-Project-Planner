@@ -32,12 +32,14 @@ export function HomePage() {
                     <span>Create new project</span>
                 </Button>
             </div>
-            <section className="overflow-y-auto">
-                <header className="mb-2">
+            <section className="flex flex-col gap-2 min-h-0 h-full">
+                <header className="">
                     <h1 className="font-semibold text-lg">Projects</h1>
                 </header>
 
-                <ProjectList projects={projects} />
+                <div className="grow overflow-y-auto scrollbar">
+                    <ProjectList projects={projects} />
+                </div>
             </section>
         </div>
     );
