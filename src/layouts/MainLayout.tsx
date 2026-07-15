@@ -7,7 +7,7 @@ export function MainLayout() {
         <div className="h-svh flex flex-col">
             <Header />
 
-            <main className="min-h-0 grow">
+            <main className="min-h-0 grow pb-2">
                 <Outlet />
             </main>
         </div>
