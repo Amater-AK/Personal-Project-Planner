@@ -5,20 +5,14 @@ import { v4 as uuidv4 } from "uuid";
 
 import { sharedStorage } from "@/shared/lib/sharedStorage";
 
-import {
-    type Project,
-    type ProjectGet,
-    type ProjectCreate,
-    type ProjectUpdate,
-    type ProjectDelete,
-} from "../types/project.type";
+import { type Project, type ProjectEdit } from "../types/project.type";
 
 interface ProjectState {
     projects: Project[];
-    getProject: (data: ProjectGet) => Project;
-    addProject: (data: ProjectCreate) => string;
-    updateProject: (data: ProjectUpdate) => void;
-    deleteProject: (data: ProjectDelete) => void;
+    getProject: (id: string) => Project;
+    createProject: (data: ProjectEdit) => string;
+    editProject: (id: string, data: ProjectEdit) => void;
+    deleteProject: (id: string) => void;
 }
 
 export const useProjectStore = create<ProjectState>()(
@@ -26,28 +20,32 @@ export const useProjectStore = create<ProjectState>()(
         immer((set, get) => ({
             projects: Array<Project>(),
 
-            getProject: (data) => {
+            getProject: (id) => {
                 const projects = get().projects;
 
-                return projects.find((project) => project.id === data.id);
+                return projects.find((project) => project.id === id);
             },
-            addProject: (data) => {
+            createProject: (data) => {
                 const id = uuidv4();
 
-                set((state) => state.projects.push({ id, ...data, createdAt: Date.now() }));
+                set((state) => {
+                    state.projects.push({ id, ...data, createdAt: Date.now() });
+                });
 
                 return id;
             },
-            updateProject: (data) => {
+            editProject: (id, data) => {
                 set((state) => {
-                    const project = state.projects.find((project) => project.id === data.id);
-                    if (!project) return;
+                    const index = state.projects.findIndex((project) => project.id === id);
+                    if (index < 0) return;
 
-                    return { ...project, ...data };
+                    state.projects[index] = { ...state.projects[index], ...data };
                 });
             },
-            deleteProject: (data) =>
-                set((state) => (state.projects = state.projects.filter((project) => project.id !== data.id))),
+            deleteProject: (id) =>
+                set((state) => {
+                    state.projects = state.projects.filter((project) => project.id !== id);
+                }),
         })),
         { name: "project-slice", storage: createJSONStorage(() => sharedStorage) },
     ),

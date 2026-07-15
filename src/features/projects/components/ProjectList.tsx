@@ -12,11 +12,9 @@ export function ProjectList({ projects }: Props) {
     }
 
     return (
-        <ul>
+        <ul className="grid gap-1">
             {projects.map((project) => (
-                <li key={project.id}>
-                    <ProjectItem project={project} />
-                </li>
+                <ProjectItem key={project.id} project={project} />
             ))}
         </ul>
     );

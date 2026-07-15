@@ -4,7 +4,4 @@ export interface Project {
     createdAt: number;
 }
 
-export type ProjectGet = Pick<Project, "id">;
-export type ProjectCreate = Pick<Project, "title">;
-export type ProjectUpdate = Pick<Project, "id" | "title">;
-export type ProjectDelete = Pick<Project, "id">;
+export type ProjectEdit = Pick<Project, "title">;
