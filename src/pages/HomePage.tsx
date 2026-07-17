@@ -1,4 +1,4 @@
-import { BsPlusSquare } from "react-icons/bs";
+import { BsPlus } from "react-icons/bs";
 
 import { useModalStore } from "@/shared/stores/modalStore";
 import { useProjectStore } from "@/features/projects/stores/projectStore";
@@ -28,7 +28,7 @@ export function HomePage() {
         <div className="wrapper flex flex-col gap-4 h-full p-2 bg-surface-primary border border-border rounded-medium">
             <div className="flex justify-end items-center gap-2">
                 <Button onClick={handleCreate}>
-                    <BsPlusSquare />
+                    <BsPlus />
                     <span>Create new project</span>
                 </Button>
             </div>
