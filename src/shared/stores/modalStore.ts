@@ -11,8 +11,8 @@ interface ModalState {
 export const useModalStore = create<ModalState>()(
     immer((set) => ({
         isOpen: false,
-        content: null,
-        openModal: (content: React.ReactNode) =>
+        content: null as React.ReactNode | null, // fix: any type
+        openModal: (content) =>
             set((state) => {
                 state.isOpen = true;
                 state.content = content;
