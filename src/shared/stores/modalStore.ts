@@ -12,7 +12,7 @@ export const useModalStore = create<ModalState>()(
     immer((set) => ({
         isOpen: false,
         content: null,
-        openModal: (content) =>
+        openModal: (content: React.ReactNode) =>
             set((state) => {
                 state.isOpen = true;
                 state.content = content;
