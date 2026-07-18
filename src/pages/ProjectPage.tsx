@@ -5,6 +5,7 @@ import { BsArrowLeftShort } from "react-icons/bs";
 import { useProjectStore } from "@/features/projects/stores/projectStore";
 
 import { LinkButton } from "@/shared/components/ui/LinkButton";
+import { Board } from "@/features/board/components/Board";
 
 import { ROUTE_PATHS } from "@/app/router/paths";
 
@@ -27,7 +28,7 @@ export function ProjectPage() {
                 <h1 className="truncate w-full text-center text-text-info">{project.title}</h1>
             </header>
 
-            <section className="grow min-h-0">Columns</section>
+            <Board projectId={project.id} />
         </div>
     );
 }
