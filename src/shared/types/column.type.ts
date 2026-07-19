@@ -1,5 +1,6 @@
 export interface Column {
     id: string;
+    position: number;
     projectId: string;
     title: string;
 }

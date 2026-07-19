@@ -13,6 +13,7 @@ export interface ColumnState {
     createColumn: (pId: string, data: ColumnEdit) => string;
     editColumn: (id: string, data: ColumnEdit) => void;
     deleteColumn: (id: string) => void;
+    moveColumns: (rearrangedColumns: Column[]) => void;
 }
 
 export const useColumnStore = create<ColumnState>()(
@@ -28,7 +29,8 @@ export const useColumnStore = create<ColumnState>()(
                 const id = uuidv4();
 
                 set((state) => {
-                    state.columns[id] = { id, projectId: pId, ...data };
+                    const columns = Object.values(state.columns).filter((column) => column.projectId === pId);
+                    state.columns[id] = { id, position: columns.length, projectId: pId, ...data };
                 });
 
                 return id;
@@ -41,6 +43,13 @@ export const useColumnStore = create<ColumnState>()(
             deleteColumn: (id) => {
                 set((state) => {
                     delete state.columns[id];
+                });
+            },
+            moveColumns: (rearrangedColumns: Column[]) => {
+                set((state) => {
+                    rearrangedColumns.forEach(
+                        (rearrangedColumn, index) => (state.columns[rearrangedColumn.id].position = index),
+                    );
                 });
             },
         })),

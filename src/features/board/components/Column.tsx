@@ -1,3 +1,6 @@
+import { useSortable } from "@dnd-kit/react/sortable";
+import { CollisionPriority } from "@dnd-kit/abstract";
+
 import { BsPlus } from "react-icons/bs";
 
 import { ColumnHeader } from "./ColumnHeader";
@@ -7,12 +10,24 @@ import { type Column } from "@/shared/types/column.type";
 
 interface Props {
     column: Column;
+    index: number;
 }
 
-export function Column({ column }: Props) {
+export function Column({ column, index }: Props) {
+    const { ref, handleRef } = useSortable({
+        id: column.id,
+        index,
+        type: "column",
+        accept: "column",
+        collisionPriority: CollisionPriority.Low,
+    });
+
     return (
-        <article className="flex flex-col gap-4 w-80 p-2 bg-surface-primary border border-border rounded-medium">
-            <ColumnHeader column={column} />
+        <article
+            ref={ref}
+            className="shrink-0 flex flex-col gap-4 w-80 p-2 bg-surface-primary border border-border rounded-medium"
+        >
+            <ColumnHeader column={column} handleRef={handleRef} />
             <div className="scrollbar grow overflow-y-auto">
                 <p>
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque perspiciatis quam odit deserunt

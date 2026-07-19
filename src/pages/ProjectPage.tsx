@@ -13,6 +13,7 @@ export function ProjectPage() {
     const { pId } = useParams();
     const getProject = useProjectStore((state) => state.getProject);
 
+    // Получение данных БЕЗ подписки для обновления
     const project = getProject(pId);
 
     return (

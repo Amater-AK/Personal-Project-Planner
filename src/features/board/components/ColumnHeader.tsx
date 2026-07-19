@@ -13,9 +13,10 @@ import { buttonStyles } from "@/shared/styles/buttonStyles";
 
 interface Props {
     column: Column;
+    handleRef: React.Ref<HTMLElement>;
 }
 
-export function ColumnHeader({ column }: Props) {
+export function ColumnHeader({ column, handleRef }: Props) {
     const openModal = useModalStore((state) => state.openModal);
     const closeModal = useModalStore((state) => state.closeModal);
     const editColumn = useColumnStore((state) => state.editColumn);
@@ -47,7 +48,9 @@ export function ColumnHeader({ column }: Props) {
 
     return (
         <header className="flex items-center gap-2">
-            <span className="inline-block px-2 text-lg text-text-info cursor-grab">⋮⋮</span>
+            <span ref={handleRef} className="inline-block px-2 text-lg text-text-info cursor-grab">
+                ⋮⋮
+            </span>
             <h2 className="truncate grow font-semibold">{column.title}</h2>
 
             <ActionMenu
