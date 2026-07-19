@@ -42,7 +42,14 @@ export const useColumnStore = create<ColumnState>()(
             },
             deleteColumn: (id) => {
                 set((state) => {
+                    const pId = state.columns[id].projectId;
+
                     delete state.columns[id];
+
+                    // re-indexing of positions
+                    const columns = Object.values(state.columns).filter((column) => column.projectId === pId);
+                    const orderedColumns = columns.toSorted((a, b) => a.position - b.position);
+                    orderedColumns.forEach((column, index) => (state.columns[column.id].position = index));
                 });
             },
             moveColumns: (rearrangedColumns: Column[]) => {
