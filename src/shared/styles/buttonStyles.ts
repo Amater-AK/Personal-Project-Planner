@@ -1,7 +1,7 @@
 import { tv, type VariantProps } from "tailwind-variants";
 
 export const buttonStyles = tv({
-    base: "inline-flex items-center gap-2 border rounded-medium cursor-pointer transition-colors duration-300 disabled:cursor-not-allowed disabled:brightness-50",
+    base: "inline-flex items-center gap-2 whitespace-nowrap border rounded-medium cursor-pointer transition-colors duration-300 disabled:cursor-not-allowed disabled:brightness-50",
     variants: {
         intent: {
             primary:
