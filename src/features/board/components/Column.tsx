@@ -1,12 +1,20 @@
+import { useCallback } from "react";
+import { useShallow } from "zustand/shallow";
 import { useSortable } from "@dnd-kit/react/sortable";
 import { CollisionPriority } from "@dnd-kit/abstract";
 
 import { BsPlus } from "react-icons/bs";
 
+import { useModalStore } from "@/shared/stores/modalStore";
+import { useCardStore } from "@/shared/stores/cardStare";
+
 import { ColumnHeader } from "./ColumnHeader";
 import { Button } from "@/shared/components/ui/Button";
+import { CardForm } from "./CardForm";
+import { Card } from "./Card";
 
 import { type Column } from "@/shared/types/column.type";
+import { type CardState } from "@/shared/stores/cardStare";
 
 interface Props {
     column: Column;
@@ -21,6 +29,27 @@ export function Column({ column, index }: Props) {
         accept: "column",
         collisionPriority: CollisionPriority.Low,
     });
+    const openModal = useModalStore((state) => state.openModal);
+    const closeModal = useModalStore((state) => state.closeModal);
+    const createCard = useCardStore((state) => state.createCard);
+
+    function handleCreate() {
+        openModal(
+            <CardForm
+                onSubmit={(data) => {
+                    createCard(column.id, data);
+                    closeModal();
+                }}
+            />,
+        );
+    }
+
+    const selectCardsByColumnId = useCallback(
+        (state: CardState) => Object.values(state.cards).filter((card) => card.columnId === column.id),
+        [column],
+    );
+    const cards = useCardStore(useShallow(selectCardsByColumnId));
+    const orderedCards = cards.toSorted((a, b) => a.position - b.position);
 
     return (
         <article
@@ -28,50 +57,13 @@ export function Column({ column, index }: Props) {
             className="shrink-0 flex flex-col gap-4 w-80 p-2 bg-surface-primary border border-border rounded-medium"
         >
             <ColumnHeader column={column} handleRef={handleRef} />
-            <div className="scrollbar grow overflow-y-auto">
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque perspiciatis quam odit deserunt
-                    nisi iusto nemo, qui odio assumenda eos officiis sapiente obcaecati, atque eius voluptates ut
-                    consequatur maxime porro ipsa similique eveniet suscipit incidunt inventore labore. Facilis ipsum
-                    cumque repudiandae obcaecati et nobis, enim illum temporibus? Eos modi deserunt animi nam est quod
-                    qui incidunt provident assumenda? Quo ipsum magnam, sequi dolorum officiis totam accusantium
-                    voluptatibus. Aut asperiores vitae facilis a fugiat eligendi nihil hic quis veritatis, dolorum
-                    corrupti non perferendis tenetur voluptatibus libero consequuntur quod suscipit. Illum natus dolore
-                    soluta aliquam id veritatis dolorum nam ab corrupti quae.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque perspiciatis quam odit deserunt
-                    nisi iusto nemo, qui odio assumenda eos officiis sapiente obcaecati, atque eius voluptates ut
-                    consequatur maxime porro ipsa similique eveniet suscipit incidunt inventore labore. Facilis ipsum
-                    cumque repudiandae obcaecati et nobis, enim illum temporibus? Eos modi deserunt animi nam est quod
-                    qui incidunt provident assumenda? Quo ipsum magnam, sequi dolorum officiis totam accusantium
-                    voluptatibus. Aut asperiores vitae facilis a fugiat eligendi nihil hic quis veritatis, dolorum
-                    corrupti non perferendis tenetur voluptatibus libero consequuntur quod suscipit. Illum natus dolore
-                    soluta aliquam id veritatis dolorum nam ab corrupti quae.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque perspiciatis quam odit deserunt
-                    nisi iusto nemo, qui odio assumenda eos officiis sapiente obcaecati, atque eius voluptates ut
-                    consequatur maxime porro ipsa similique eveniet suscipit incidunt inventore labore. Facilis ipsum
-                    cumque repudiandae obcaecati et nobis, enim illum temporibus? Eos modi deserunt animi nam est quod
-                    qui incidunt provident assumenda? Quo ipsum magnam, sequi dolorum officiis totam accusantium
-                    voluptatibus. Aut asperiores vitae facilis a fugiat eligendi nihil hic quis veritatis, dolorum
-                    corrupti non perferendis tenetur voluptatibus libero consequuntur quod suscipit. Illum natus dolore
-                    soluta aliquam id veritatis dolorum nam ab corrupti quae.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque perspiciatis quam odit deserunt
-                    nisi iusto nemo, qui odio assumenda eos officiis sapiente obcaecati, atque eius voluptates ut
-                    consequatur maxime porro ipsa similique eveniet suscipit incidunt inventore labore. Facilis ipsum
-                    cumque repudiandae obcaecati et nobis, enim illum temporibus? Eos modi deserunt animi nam est quod
-                    qui incidunt provident assumenda? Quo ipsum magnam, sequi dolorum officiis totam accusantium
-                    voluptatibus. Aut asperiores vitae facilis a fugiat eligendi nihil hic quis veritatis, dolorum
-                    corrupti non perferendis tenetur voluptatibus libero consequuntur quod suscipit. Illum natus dolore
-                    soluta aliquam id veritatis dolorum nam ab corrupti quae.
-                </p>
+            <div className="scrollbar grow flex flex-col gap-2 overflow-y-auto">
+                {orderedCards.map((card, index) => (
+                    <Card key={card.id} card={card} index={index} />
+                ))}
             </div>
             <footer>
-                <Button intent="regular" width="full">
+                <Button intent="regular" width="full" onClick={handleCreate}>
                     <BsPlus />
                     <span>Add a card</span>
                 </Button>

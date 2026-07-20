@@ -9,7 +9,7 @@ import { type Column, type ColumnEdit } from "../types/column.type";
 
 export interface ColumnState {
     columns: Record<string, Column>;
-    getColumn: (id: string) => Column;
+    getColumns: (pId: string) => Column[];
     createColumn: (pId: string, data: ColumnEdit) => string;
     editColumn: (id: string, data: ColumnEdit) => void;
     deleteColumn: (id: string) => void;
@@ -21,10 +21,8 @@ export const useColumnStore = create<ColumnState>()(
     persist(
         immer((set, get) => ({
             columns: {},
-            getColumn: (id) => {
-                const columns = get().columns;
-
-                return columns[id];
+            getColumns: (pId) => {
+                return Object.values(get().columns).filter((column) => column.projectId === pId);
             },
             createColumn: (pId, data) => {
                 const id = uuidv4();

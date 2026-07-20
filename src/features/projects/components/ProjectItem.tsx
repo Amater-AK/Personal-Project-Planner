@@ -5,6 +5,7 @@ import { BsPencilSquare, BsTrash } from "react-icons/bs";
 import { useModalStore } from "@/shared/stores/modalStore";
 import { useProjectStore } from "../stores/projectStore";
 import { useColumnStore } from "@/shared/stores/columnStore";
+import { useCardStore } from "@/shared/stores/cardStare";
 
 import { Button } from "@/shared/components/ui/Button";
 import { ProjectForm } from "./ProjectForm";
@@ -22,7 +23,9 @@ export function ProjectItem({ project }: Props) {
     const closeModal = useModalStore((state) => state.closeModal);
     const editProject = useProjectStore((state) => state.editProject);
     const deleteProject = useProjectStore((state) => state.deleteProject);
+    const getColumns = useColumnStore((state) => state.getColumns);
     const deleteColumns = useColumnStore((state) => state.deleteColumns);
+    const deleteCards = useCardStore((state) => state.deleteCards);
 
     function handleEdit() {
         openModal(
@@ -40,8 +43,10 @@ export function ProjectItem({ project }: Props) {
         openModal(
             <ConfirmDelete
                 onConfirm={() => {
-                    deleteProject(project.id);
+                    const columns = getColumns(project.id);
+                    columns.forEach((column) => deleteCards(column.id));
                     deleteColumns(project.id);
+                    deleteProject(project.id);
                     closeModal();
                 }}
                 onCancel={closeModal}

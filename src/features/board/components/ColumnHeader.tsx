@@ -2,6 +2,7 @@ import { BsThreeDots, BsPencilSquare, BsTrash } from "react-icons/bs";
 
 import { useModalStore } from "@/shared/stores/modalStore";
 import { useColumnStore } from "@/shared/stores/columnStore";
+import { useCardStore } from "@/shared/stores/cardStare";
 
 import { ActionMenu } from "@/shared/components/ui/ActionMenu";
 import { Button } from "@/shared/components/ui/Button";
@@ -21,6 +22,7 @@ export function ColumnHeader({ column, handleRef }: Props) {
     const closeModal = useModalStore((state) => state.closeModal);
     const editColumn = useColumnStore((state) => state.editColumn);
     const deleteColumn = useColumnStore((state) => state.deleteColumn);
+    const deleteCards = useCardStore((state) => state.deleteCards);
 
     function handleEdit() {
         openModal(
@@ -39,6 +41,7 @@ export function ColumnHeader({ column, handleRef }: Props) {
             <ConfirmDelete
                 onConfirm={() => {
                     deleteColumn(column.id);
+                    deleteCards(column.id);
                     closeModal();
                 }}
                 onCancel={closeModal}
