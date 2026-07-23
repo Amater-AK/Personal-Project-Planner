@@ -5,7 +5,7 @@ import { BsPencilSquare, BsTrash } from "react-icons/bs";
 import { useModalStore } from "@/shared/stores/modalStore";
 import { useProjectStore } from "../stores/projectStore";
 import { useColumnStore } from "@/shared/stores/columnStore";
-import { useCardStore } from "@/shared/stores/cardStare";
+import { useCardStore } from "@/shared/stores/cardStore";
 
 import { Button } from "@/shared/components/ui/Button";
 import { ProjectForm } from "./ProjectForm";

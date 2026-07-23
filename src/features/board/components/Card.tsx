@@ -4,7 +4,7 @@ import { CollisionPriority } from "@dnd-kit/abstract";
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
 import { useModalStore } from "@/shared/stores/modalStore";
-import { useCardStore } from "@/shared/stores/cardStare";
+import { useCardStore } from "@/shared/stores/cardStore";
 
 import { Button } from "@/shared/components/ui/Button";
 import { CardForm } from "./CardForm";
@@ -16,14 +16,16 @@ import { type Card } from "@/shared/types/card.type";
 interface Props {
     card: Card;
     index: number;
+    columnId: string;
 }
 
-export function Card({ card, index }: Props) {
-    const { ref } = useSortable({
+export function Card({ card, index, columnId }: Props) {
+    const { ref, isDragging } = useSortable({
         id: card.id,
         index,
         type: "card",
         accept: "card",
+        group: columnId,
         collisionPriority: CollisionPriority.Low,
     });
     const openModal = useModalStore((state) => state.openModal);
@@ -60,13 +62,14 @@ export function Card({ card, index }: Props) {
     return (
         <article
             ref={ref}
-            className="group/card relative p-2 bg-input-bg border border-input-border rounded-medium cursor-grab"
+            className={`group/card relative p-2 bg-input-bg border border-input-border rounded-medium cursor-grab ${isDragging ? "border-green-500" : ""}`}
         >
             <div className="whitespace-pre-wrap">{card.text}</div>
             <footer>
                 <time className="grow text-xs text-text-info" dateTime={datetime}>
                     {datetime}
                 </time>
+                <p className="text-xs">{card.id}</p>
             </footer>
 
             <div className="absolute bottom-2 right-2 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-300 group-hover/card:opacity-100 group-hover/card:pointer-events-auto">

@@ -2,7 +2,7 @@ import { BsThreeDots, BsPencilSquare, BsTrash } from "react-icons/bs";
 
 import { useModalStore } from "@/shared/stores/modalStore";
 import { useColumnStore } from "@/shared/stores/columnStore";
-import { useCardStore } from "@/shared/stores/cardStare";
+import { useCardStore } from "@/shared/stores/cardStore";
 
 import { ActionMenu } from "@/shared/components/ui/ActionMenu";
 import { Button } from "@/shared/components/ui/Button";

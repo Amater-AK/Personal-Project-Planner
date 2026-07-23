@@ -14,7 +14,7 @@ export interface ColumnState {
     editColumn: (id: string, data: ColumnEdit) => void;
     deleteColumn: (id: string) => void;
     deleteColumns: (pId: string) => void;
-    moveColumns: (rearrangedColumns: Column[]) => void;
+    moveColumn: (id: string, startIndex: number, endIndex: number) => void;
 }
 
 export const useColumnStore = create<ColumnState>()(
@@ -58,11 +58,18 @@ export const useColumnStore = create<ColumnState>()(
                     });
                 });
             },
-            moveColumns: (rearrangedColumns: Column[]) => {
+            moveColumn: (id, startIndex, endIndex) => {
                 set((state) => {
-                    rearrangedColumns.forEach(
-                        (rearrangedColumn, index) => (state.columns[rearrangedColumn.id].position = index),
-                    );
+                    if (startIndex === endIndex) return;
+
+                    const pId = state.columns[id].projectId;
+                    const columns = Object.values(state.columns)
+                        .filter((column) => column.projectId === pId)
+                        .sort((a, b) => a.position - b.position);
+
+                    const [movedColumn] = columns.splice(startIndex, 1);
+                    columns.splice(endIndex, 0, movedColumn);
+                    columns.forEach((column, index) => (state.columns[column.id].position = index));
                 });
             },
         })),
