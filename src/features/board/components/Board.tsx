@@ -2,22 +2,18 @@ import { useCallback, useMemo } from "react";
 import { useShallow } from "zustand/shallow";
 import { DragDropProvider } from "@dnd-kit/react";
 import { move } from "@dnd-kit/helpers";
-import { isSortable } from "@dnd-kit/react/sortable";
 
 import { BsPlus } from "react-icons/bs";
 
 import { useModalStore } from "@/shared/stores/modalStore";
-import { useColumnStore } from "@/shared/stores/columnStore";
-import { useCardStore } from "@/shared/stores/cardStore";
+import { useBoardStore } from "@/shared/stores/boardStore";
 
 import { Column } from "./Column";
 import { ColumnForm } from "./ColumnForm";
-import { Card } from "./Card";
 import { Button } from "@/shared/components/ui/Button";
 
-import { type ColumnState } from "@/shared/stores/columnStore";
-import { type CardState } from "@/shared/stores/cardStore";
-import { type BoardState } from "@/shared/types/board.type";
+import { type BoardState } from "@/shared/stores/boardStore";
+import { type BoardState as BoardType } from "@/shared/types/board.type";
 
 interface Props {
     projectId: string;
@@ -26,9 +22,9 @@ interface Props {
 export function Board({ projectId }: Props) {
     const openModal = useModalStore((state) => state.openModal);
     const closeModal = useModalStore((state) => state.closeModal);
-    const createColumn = useColumnStore((state) => state.createColumn);
-    const moveColumn = useColumnStore((state) => state.moveColumn);
-    const moveCards = useCardStore((state) => state.moveCards);
+    const createColumn = useBoardStore((state) => state.createColumn);
+    const moveColumns = useBoardStore((state) => state.moveColumns);
+    const moveCards = useBoardStore((state) => state.moveCards);
 
     function handleCreate() {
         openModal(
@@ -42,94 +38,40 @@ export function Board({ projectId }: Props) {
     }
 
     const selectColumnsByProjectId = useCallback(
-        (state: ColumnState) => Object.values(state.columns).filter((column) => column.projectId === projectId),
+        (state: BoardState) => Object.values(state.columns).filter((column) => column.projectId === projectId),
         [projectId],
     );
-    const columns = useColumnStore(useShallow(selectColumnsByProjectId));
-    const orderedColumns = columns.toSorted((a, b) => a.position - b.position);
-    // const columnIds = useMemo(() => columns.map((column) => column.id), [columns]);
+    const columns = useBoardStore(useShallow(selectColumnsByProjectId));
 
-    // const selectCardsByColumnIds = useCallback(
-    //     (state: CardState) => Object.values(state.cards).filter((card) => columnIds.includes(card.columnId)),
-    //     [columnIds],
-    // );
-    // const cards = useCardStore(useShallow(selectCardsByColumnIds));
+    const boardState = useMemo(() => {
+        const state: BoardType = {};
+        columns.forEach((column) => (state[column.id] = [...column.cardIds]));
 
-    // const boardState = useMemo(() => {
-    //     const state: BoardState = {};
-
-    //     orderedColumns.forEach((column) => (state[column.id] = []));
-    //     cards.toSorted((a, b) => a.position - b.position).forEach((card) => state[card.columnId].push(card));
-
-    //     return state;
-    // }, [orderedColumns, cards]);
+        return state;
+    }, [columns]);
+    const orderedColumnIds = useMemo(
+        () => columns.toSorted((a, b) => a.position - b.position).map((column) => column.id),
+        [columns],
+    );
 
     return (
         <DragDropProvider
-        // onDragOver={(event) => {
-        //     const { source } = event.operation;
-        //     if (source.type !== "card") return;
+            onDragOver={(event) => {
+                const { source } = event.operation;
+                if (source?.type === "column") return;
 
-        //     const rearrangedBoardState = move(boardState, event);
-        //     console.log(rearrangedBoardState);
+                moveCards(move(boardState, event));
+            }}
+            onDragEnd={(event) => {
+                const { source } = event.operation;
+                if (event.canceled || source.type !== "column") return;
 
-        //     if (!isSortable(source)) return;
-        //     const { initialGroup, group } = source;
-        //     moveCards(rearrangedBoardState, initialGroup as string, group as string);
-        // }}
-        // -----------------
-        // onDragOver={(event) => {
-        //     // Только карточки
-        //     const { source, target } = event.operation;
-        //     if (source.type !== "card" || !isSortable(source)) return;
-        //     // Если цель карточка, то меняем columnId(в той же колонке ничего не поменяется, а в другой нужно) и др.
-        //     if (target.type === "card") {
-        //         const { id, initialIndex, index } = source;
-        //         moveCard(id as string, {
-        //             startIndex: initialIndex,
-        //             endIndex: index,
-        //             columnId: target.id as string,
-        //         });
-        //     }
-        //     // Если цель колонка (пустая или не полная), то меняем columnId
-        //     // if (target.type === "column") {
-        //     //     const { id } = source;
-        //     //     moveCardToEmpty(id as string, target.id as string);
-        //     // }
-        // }}
-        // onDragEnd={(event) => {
-        //     // Только колонки
-        //     const { source } = event.operation;
-        //     if (event.canceled || source.type !== "column" || !isSortable(source)) return;
-
-        //     const { initialIndex, index, id } = source;
-        //     moveColumn(id as string, initialIndex, index);
-        // }}
-        // onDragOver={(event) => {
-        //     const { source } = event.operation;
-        //     if (source.type !== "card" || !isSortable(source)) return;
-
-        //     const { id, initialIndex, index, initialGroup, group } = source;
-        //     if (initialGroup == null || group == null) return;
-
-        //     moveCard(id as string, {
-        //         startIndex: initialIndex,
-        //         endIndex: index,
-        //         startColumnId: initialGroup as string,
-        //         endColumnId: group as string,
-        //     });
-        // }}
-        // onDragEnd={(event) => {
-        //     const { source } = event.operation;
-        //     if (event.canceled || source.type !== "column" || !isSortable(source)) return;
-
-        //     const { initialIndex, index, id } = source;
-        //     moveColumn(id as string, initialIndex, index);
-        // }}
+                moveColumns(move(orderedColumnIds, event));
+            }}
         >
             <section className="scrollbar grow flex gap-4 min-h-0 overflow-x-auto">
-                {orderedColumns.map((column, index) => (
-                    <Column key={column.id} column={column} index={index} />
+                {orderedColumnIds.map((columnId, index) => (
+                    <Column key={columnId} columnId={columnId} index={index} />
                 ))}
                 <div>
                     <Button intent="secondary" onClick={handleCreate}>

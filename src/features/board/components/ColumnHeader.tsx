@@ -1,8 +1,7 @@
 import { BsThreeDots, BsPencilSquare, BsTrash } from "react-icons/bs";
 
 import { useModalStore } from "@/shared/stores/modalStore";
-import { useColumnStore } from "@/shared/stores/columnStore";
-import { useCardStore } from "@/shared/stores/cardStore";
+import { useBoardStore } from "@/shared/stores/boardStore";
 
 import { ActionMenu } from "@/shared/components/ui/ActionMenu";
 import { Button } from "@/shared/components/ui/Button";
@@ -20,9 +19,9 @@ interface Props {
 export function ColumnHeader({ column, handleRef }: Props) {
     const openModal = useModalStore((state) => state.openModal);
     const closeModal = useModalStore((state) => state.closeModal);
-    const editColumn = useColumnStore((state) => state.editColumn);
-    const deleteColumn = useColumnStore((state) => state.deleteColumn);
-    const deleteCards = useCardStore((state) => state.deleteCards);
+    const editColumn = useBoardStore((state) => state.editColumn);
+    const deleteColumn = useBoardStore((state) => state.deleteColumn);
+    const deleteCard = useBoardStore((state) => state.deleteCard);
 
     function handleEdit() {
         openModal(
@@ -40,8 +39,8 @@ export function ColumnHeader({ column, handleRef }: Props) {
         openModal(
             <ConfirmDelete
                 onConfirm={() => {
+                    column.cardIds.forEach((cardId) => deleteCard(cardId));
                     deleteColumn(column.id);
-                    deleteCards(column.id);
                     closeModal();
                 }}
                 onCancel={closeModal}

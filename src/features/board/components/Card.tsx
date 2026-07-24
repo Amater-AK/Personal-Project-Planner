@@ -4,7 +4,7 @@ import { CollisionPriority } from "@dnd-kit/abstract";
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
 import { useModalStore } from "@/shared/stores/modalStore";
-import { useCardStore } from "@/shared/stores/cardStore";
+import { useBoardStore } from "@/shared/stores/boardStore";
 
 import { Button } from "@/shared/components/ui/Button";
 import { CardForm } from "./CardForm";
@@ -14,14 +14,14 @@ import { toDate } from "@/shared/utils/datetime";
 import { type Card } from "@/shared/types/card.type";
 
 interface Props {
-    card: Card;
+    cardId: string;
     index: number;
     columnId: string;
 }
 
-export function Card({ card, index, columnId }: Props) {
+export function Card({ cardId, index, columnId }: Props) {
     const { ref, isDragging } = useSortable({
-        id: card.id,
+        id: cardId,
         index,
         type: "card",
         accept: "card",
@@ -30,8 +30,10 @@ export function Card({ card, index, columnId }: Props) {
     });
     const openModal = useModalStore((state) => state.openModal);
     const closeModal = useModalStore((state) => state.closeModal);
-    const editCard = useCardStore((state) => state.editCard);
-    const deleteCard = useCardStore((state) => state.deleteCard);
+    const editCard = useBoardStore((state) => state.editCard);
+    const deleteCard = useBoardStore((state) => state.deleteCard);
+    const deleteCardFromColumn = useBoardStore((state) => state.deleteCardFromColumn);
+    const card = useBoardStore((state) => state.cards[cardId]);
 
     function handleEdit() {
         openModal(
@@ -49,6 +51,7 @@ export function Card({ card, index, columnId }: Props) {
         openModal(
             <ConfirmDelete
                 onConfirm={() => {
+                    deleteCardFromColumn(card.columnId, card.id);
                     deleteCard(card.id);
                     closeModal();
                 }}

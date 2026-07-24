@@ -1,6 +1,5 @@
 export interface Card {
     id: string;
-    position: number;
     columnId: string;
     text: string;
     createdAt: number;
