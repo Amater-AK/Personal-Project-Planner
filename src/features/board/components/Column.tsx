@@ -19,7 +19,7 @@ interface Props {
 }
 
 export function Column({ columnId, index }: Props) {
-    const { ref, isDragging } = useSortable({
+    const { ref, handleRef, isDragging } = useSortable({
         id: columnId,
         index,
         type: "column",
@@ -44,13 +44,21 @@ export function Column({ columnId, index }: Props) {
         );
     }
 
+    if (isDragging) {
+        return (
+            <article
+                ref={ref}
+                className="shrink-0 flex flex-col gap-4 w-80 p-2 border border-outline rounded-medium"
+            ></article>
+        );
+    }
+
     return (
         <article
             ref={ref}
-            className={`shrink-0 flex flex-col gap-4 w-80 p-2 bg-surface-primary border border-border rounded-medium ${isDragging ? "border-green-500" : ""}`}
+            className="shrink-0 flex flex-col gap-4 w-80 p-2 bg-surface-primary border border-border rounded-medium"
         >
-            <ColumnHeader column={column} handleRef={null} />
-            <p className="text-xs">{column.id}</p>
+            <ColumnHeader column={column} handleRef={handleRef} />
             <div className="scrollbar grow flex flex-col gap-2 overflow-y-auto">
                 {column.cardIds.map((cardId, index) => (
                     <Card key={cardId} cardId={cardId} index={index} columnId={column.id} />

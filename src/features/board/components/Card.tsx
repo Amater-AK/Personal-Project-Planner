@@ -62,17 +62,31 @@ export function Card({ cardId, index, columnId }: Props) {
 
     const datetime = toDate(card.createdAt);
 
+    if (isDragging) {
+        return (
+            <article ref={ref} className="p-2 border border-outline rounded-medium">
+                <div className="opacity-0 pointer-events-none">
+                    <div className="whitespace-pre-wrap">{card.text}</div>
+                    <footer>
+                        <time className="grow text-xs text-text-info" dateTime={datetime}>
+                            {datetime}
+                        </time>
+                    </footer>
+                </div>
+            </article>
+        );
+    }
+
     return (
         <article
             ref={ref}
-            className={`group/card relative p-2 bg-input-bg border border-input-border rounded-medium cursor-grab ${isDragging ? "border-green-500" : ""}`}
+            className="group/card relative p-2 bg-input-bg border border-input-border rounded-medium cursor-grab"
         >
             <div className="whitespace-pre-wrap">{card.text}</div>
             <footer>
                 <time className="grow text-xs text-text-info" dateTime={datetime}>
                     {datetime}
                 </time>
-                <p className="text-xs">{card.id}</p>
             </footer>
 
             <div className="absolute bottom-2 right-2 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-300 group-hover/card:opacity-100 group-hover/card:pointer-events-auto">

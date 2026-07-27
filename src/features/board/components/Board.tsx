@@ -11,6 +11,7 @@ import { useBoardStore } from "@/shared/stores/boardStore";
 import { Column } from "./Column";
 import { ColumnForm } from "./ColumnForm";
 import { Button } from "@/shared/components/ui/Button";
+import { DragOverlay } from "./DragOverlay";
 
 import { type BoardState } from "@/shared/stores/boardStore";
 import { type BoardState as BoardType } from "@/shared/types/board.type";
@@ -79,6 +80,7 @@ export function Board({ projectId }: Props) {
                         <span>Create a column</span>
                     </Button>
                 </div>
+                <DragOverlay />
             </section>
         </DragDropProvider>
     );
