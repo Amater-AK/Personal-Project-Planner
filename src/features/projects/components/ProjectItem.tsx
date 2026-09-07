@@ -58,7 +58,7 @@ export function ProjectItem({ project }: Props) {
     const datetime = toDate(project.createdAt);
 
     return (
-        <li className="relative min-w-0">
+        <li className="group/project relative min-w-0">
             <Link
                 to={`p/${project.id}`}
                 className="grow flex items-center gap-6 p-2 pl-4 pr-22 text-input-placeholder bg-input-bg border border-border rounded-medium hover:text-input-text hover:border-input-text transition-colors duration-300"
@@ -69,7 +69,7 @@ export function ProjectItem({ project }: Props) {
                 </time>
             </Link>
 
-            <div className="absolute top-0 bottom-0 right-2 flex items-center gap-2">
+            <div className="absolute top-0 bottom-0 right-2 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-300 group-hover/project:opacity-100 group-hover/project:pointer-events-auto">
                 <Button intent="regular" onlyIcon={true} aria-label={`Edit ${project.title}`} onClick={handleEdit}>
                     <BsPencilSquare />
                 </Button>

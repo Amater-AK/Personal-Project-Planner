@@ -1,5 +1,5 @@
 import { useSortable } from "@dnd-kit/react/sortable";
-import { CollisionPriority } from "@dnd-kit/abstract";
+// import { CollisionPriority } from "@dnd-kit/abstract";
 
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
@@ -26,7 +26,7 @@ export function Card({ cardId, index, columnId }: Props) {
         type: "card",
         accept: "card",
         group: columnId,
-        collisionPriority: CollisionPriority.Low,
+        // collisionPriority: CollisionPriority.Low,
     });
     const openModal = useModalStore((state) => state.openModal);
     const closeModal = useModalStore((state) => state.closeModal);
