@@ -10,6 +10,7 @@ import { type Project, type ProjectEdit } from "../types/project.type";
 interface ProjectState {
     projects: Project[];
     getProject: (id: string) => Project;
+    openProject: (id: string) => void;
     createProject: (data: ProjectEdit) => string;
     editProject: (id: string, data: ProjectEdit) => void;
     deleteProject: (id: string) => void;
@@ -25,11 +26,17 @@ export const useProjectStore = create<ProjectState>()(
 
                 return projects.find((project) => project.id === id);
             },
+            openProject: (id) => {
+                set((state) => {
+                    const project = state.projects.find((project) => project.id === id);
+                    project.lastOpenedAt = Date.now();
+                });
+            },
             createProject: (data) => {
                 const id = uuidv4();
 
                 set((state) => {
-                    state.projects.push({ id, ...data, createdAt: Date.now() });
+                    state.projects.push({ id, ...data, createdAt: Date.now(), lastOpenedAt: null });
                 });
 
                 return id;
