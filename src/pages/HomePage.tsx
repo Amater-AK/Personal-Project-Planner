@@ -41,7 +41,7 @@ export function HomePage() {
             {recentProjects.length > 0 && (
                 <section className="flex flex-col gap-2 mb-4">
                     <header className="">
-                        <h1 className="font-semibold text-lg">Recent projects</h1>
+                        <h2 className="font-semibold text-lg">Recent projects</h2>
                     </header>
 
                     <div className="grow overflow-y-auto scrollbar">
@@ -52,7 +52,7 @@ export function HomePage() {
 
             <section className="flex flex-col gap-2 min-h-0 h-full">
                 <header className="">
-                    <h1 className="font-semibold text-lg">Projects</h1>
+                    <h2 className="font-semibold text-lg">Projects</h2>
                 </header>
 
                 <div className="grow overflow-y-auto scrollbar">
