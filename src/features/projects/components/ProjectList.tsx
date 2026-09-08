@@ -9,7 +9,7 @@ interface Props {
 
 export function ProjectList({ projects, isRecent = false }: Props) {
     if (!projects.length) {
-        return <p className="text-sm text-text-info">There are no projects yet</p>;
+        return <p className="text-sm text-text-info">There are no projects</p>;
     }
 
     return (
