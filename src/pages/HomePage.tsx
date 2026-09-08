@@ -45,7 +45,7 @@ export function HomePage() {
                     </header>
 
                     <div className="grow overflow-y-auto scrollbar">
-                        <ProjectList projects={recentProjects} />
+                        <ProjectList projects={recentProjects} isRecent={true} />
                     </div>
                 </section>
             )}
@@ -56,7 +56,7 @@ export function HomePage() {
                 </header>
 
                 <div className="grow overflow-y-auto scrollbar">
-                    <ProjectList projects={projects} />
+                    <ProjectList projects={projects} isRecent={false} />
                 </div>
             </section>
         </div>

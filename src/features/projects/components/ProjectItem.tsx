@@ -15,9 +15,10 @@ import { toDate } from "@/shared/utils/datetime";
 
 interface Props {
     project: Project;
+    isRecent: boolean;
 }
 
-export function ProjectItem({ project }: Props) {
+export function ProjectItem({ project, isRecent = false }: Props) {
     const openModal = useModalStore((state) => state.openModal);
     const closeModal = useModalStore((state) => state.closeModal);
     const editProject = useProjectStore((state) => state.editProject);
@@ -55,18 +56,21 @@ export function ProjectItem({ project }: Props) {
         );
     }
 
-    const datetime = toDate(project.createdAt);
+    const datetime = isRecent ? toDate(project.lastOpenedAt) : toDate(project.createdAt);
 
     return (
         <li className="group/project relative min-w-0">
             <Link
                 to={`p/${project.id}`}
-                className="grow flex items-center gap-6 p-2 pl-4 pr-22 text-input-placeholder bg-input-bg border border-border rounded-medium hover:text-input-text hover:border-input-text transition-colors duration-300"
+                className="grow flex items-center gap-6 p-2 px-4 text-input-placeholder bg-input-bg border border-border rounded-medium hover:text-input-text hover:border-input-text  group-hover/project:pr-22 transition-all duration-300"
             >
                 <span className="truncate grow">{project.title}</span>
-                <time className="text-sm text-text-secondary" dateTime={datetime}>
-                    {datetime}
-                </time>
+                <div className="flex items-center gap-2">
+                    <span className="text-sm text-text-info">{isRecent ? "last opened" : "created"}</span>
+                    <time className="text-sm text-text-secondary" dateTime={datetime}>
+                        {datetime}
+                    </time>
+                </div>
             </Link>
 
             <div className="absolute top-0 bottom-0 right-2 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-300 group-hover/project:opacity-100 group-hover/project:pointer-events-auto">
