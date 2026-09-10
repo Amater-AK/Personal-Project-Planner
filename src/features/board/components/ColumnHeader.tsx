@@ -54,6 +54,7 @@ export function ColumnHeader({ column, handleRef }: Props) {
                 ⋮⋮
             </span>
             <h2 className="truncate grow font-semibold">{column.title}</h2>
+            <span className="text-sm text-text-info">({column.cardIds.length})</span>
 
             <ActionMenu
                 className={(isOpen) =>
