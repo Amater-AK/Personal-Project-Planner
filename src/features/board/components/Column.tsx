@@ -19,18 +19,18 @@ interface Props {
 }
 
 export function Column({ columnId, index }: Props) {
+    const column = useBoardStore((state) => state.columns[columnId]);
     const { ref, handleRef, isDragging } = useSortable({
         id: columnId,
         index,
         type: "column",
-        accept: ["card", "column"],
+        accept: column.isCollapsed ? ["column"] : ["card", "column"],
         collisionPriority: CollisionPriority.Low,
     });
     const openModal = useModalStore((state) => state.openModal);
     const closeModal = useModalStore((state) => state.closeModal);
     const addCardToColumn = useBoardStore((state) => state.addCardToColumn);
     const createCard = useBoardStore((state) => state.createCard);
-    const column = useBoardStore((state) => state.columns[columnId]);
 
     function handleCreate() {
         openModal(
@@ -48,7 +48,7 @@ export function Column({ columnId, index }: Props) {
         return (
             <article
                 ref={ref}
-                className="shrink-0 flex flex-col gap-4 w-80 p-2 border border-outline rounded-medium"
+                className={`shrink-0 flex flex-col gap-4 ${column.isCollapsed ? "w-20" : "w-80"} p-2 border border-outline rounded-medium`}
             ></article>
         );
     }
@@ -56,20 +56,24 @@ export function Column({ columnId, index }: Props) {
     return (
         <article
             ref={ref}
-            className="shrink-0 flex flex-col gap-4 w-80 p-2 bg-surface-primary border border-border rounded-medium"
+            className={`shrink-0 flex flex-col gap-4 ${column.isCollapsed ? "w-20" : "w-80"} p-2 bg-surface-primary border border-border rounded-medium`}
         >
             <ColumnHeader column={column} handleRef={handleRef} />
-            <div className="scrollbar grow flex flex-col gap-2 overflow-y-auto">
-                {column.cardIds.map((cardId, index) => (
-                    <Card key={cardId} cardId={cardId} index={index} columnId={column.id} />
-                ))}
-            </div>
-            <footer>
-                <Button intent="regular" width="full" onClick={handleCreate}>
-                    <BsPlus />
-                    <span>Add a card</span>
-                </Button>
-            </footer>
+            {!column.isCollapsed && (
+                <>
+                    <div className="scrollbar grow flex flex-col gap-2 overflow-y-auto">
+                        {column.cardIds.map((cardId, index) => (
+                            <Card key={cardId} cardId={cardId} index={index} columnId={column.id} />
+                        ))}
+                    </div>
+                    <footer>
+                        <Button intent="regular" width="full" onClick={handleCreate}>
+                            <BsPlus />
+                            <span>Add a card</span>
+                        </Button>
+                    </footer>
+                </>
+            )}
         </article>
     );
 }

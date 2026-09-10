@@ -186,6 +186,11 @@
         @apply overflow-hidden text-ellipsis whitespace-nowrap;
     }
 
+    .vertical-text {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+    }
+
     .scrollbar {
         @apply [scrollbar-color:var(--color-outline)_var(--color-border)] [scrollbar-width:thin] [scrollbar-gutter:stable];
     }

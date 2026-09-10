@@ -17,6 +17,7 @@ export interface BoardState {
     editColumn: (id: string, data: ColumnEdit) => void;
     deleteColumn: (id: string) => void;
     deleteColumns: (pId: string) => void;
+    toggleColumnCollapse: (id: string) => void;
     addCardToColumn: (id: string, cardId: string) => void;
     deleteCardFromColumn: (id: string, cardId: string) => void;
     moveColumns: (ids: string[]) => void;
@@ -41,7 +42,14 @@ export const useBoardStore = create<BoardState>()(
 
                 set((state) => {
                     const columns = Object.values(state.columns).filter((column) => column.projectId === pId);
-                    state.columns[id] = { id, position: columns.length, projectId: pId, cardIds: [], ...data };
+                    state.columns[id] = {
+                        id,
+                        position: columns.length,
+                        projectId: pId,
+                        cardIds: [],
+                        isCollapsed: false,
+                        ...data,
+                    };
                 });
 
                 return id;
@@ -68,6 +76,11 @@ export const useBoardStore = create<BoardState>()(
                     Object.values(state.columns).forEach((column) => {
                         if (column.projectId === pId) delete state.columns[column.id];
                     });
+                });
+            },
+            toggleColumnCollapse: (id) => {
+                set((state) => {
+                    state.columns[id].isCollapsed = !state.columns[id].isCollapsed;
                 });
             },
             addCardToColumn: (id, cardId) => {

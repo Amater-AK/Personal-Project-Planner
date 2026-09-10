@@ -1,4 +1,4 @@
-import { BsThreeDots, BsPencilSquare, BsTrash } from "react-icons/bs";
+import { BsThreeDots, BsPencilSquare, BsTrash, BsArrowsCollapseVertical, BsArrowsExpandVertical } from "react-icons/bs";
 
 import { useModalStore } from "@/shared/stores/modalStore";
 import { useBoardStore } from "@/shared/stores/boardStore";
@@ -22,6 +22,7 @@ export function ColumnHeader({ column, handleRef }: Props) {
     const editColumn = useBoardStore((state) => state.editColumn);
     const deleteColumn = useBoardStore((state) => state.deleteColumn);
     const deleteCard = useBoardStore((state) => state.deleteCard);
+    const toggleColumnCollapse = useBoardStore((state) => state.toggleColumnCollapse);
 
     function handleEdit() {
         openModal(
@@ -48,6 +49,31 @@ export function ColumnHeader({ column, handleRef }: Props) {
         );
     }
 
+    function handleToggleCollapse() {
+        toggleColumnCollapse(column.id);
+    }
+
+    if (column.isCollapsed) {
+        return (
+            <header className="grow flex flex-col items-center gap-2 min-h-0">
+                <div className="flex items-center gap-2">
+                    <span ref={handleRef} className="inline-block px-2 text-lg text-text-info cursor-grab">
+                        ⋮⋮
+                    </span>
+
+                    <ActionButton
+                        handleEdit={handleEdit}
+                        handleDelete={handleDelete}
+                        handleToggleCollapse={handleToggleCollapse}
+                        isCollapsed={column.isCollapsed}
+                    />
+                </div>
+
+                <h2 className="truncate vertical-text grow font-semibold">{column.title}</h2>
+            </header>
+        );
+    }
+
     return (
         <header className="flex items-center gap-2">
             <span ref={handleRef} className="inline-block px-2 text-lg text-text-info cursor-grab">
@@ -56,31 +82,65 @@ export function ColumnHeader({ column, handleRef }: Props) {
             <h2 className="truncate grow font-semibold">{column.title}</h2>
             <span className="text-sm text-text-info">({column.cardIds.length})</span>
 
-            <ActionMenu
-                className={(isOpen) =>
-                    `top-0 left-full min-w-40 p-1 bg-surface-primary border border-border rounded-medium translate-x-2 shadow-md transition-all duration-300 ${isOpen ? "translate-y-0" : "opacity-0 translate-y-10"}`
-                }
-                trigger={
-                    <Button intent="regular" onlyIcon={true}>
-                        <BsThreeDots />
-                    </Button>
-                }
-            >
-                <ActionMenu.ActionButton
-                    className={buttonStyles({ intent: "regular", width: "full" })}
-                    onClick={handleEdit}
-                >
-                    <BsPencilSquare />
-                    <span>Edit</span>
-                </ActionMenu.ActionButton>
-                <ActionMenu.ActionButton
-                    className={buttonStyles({ intent: "danger", width: "full" })}
-                    onClick={handleDelete}
-                >
-                    <BsTrash />
-                    <span>Delete</span>
-                </ActionMenu.ActionButton>
-            </ActionMenu>
+            <ActionButton
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+                handleToggleCollapse={handleToggleCollapse}
+                isCollapsed={column.isCollapsed}
+            />
         </header>
+    );
+}
+
+interface ActionButtonProps {
+    handleEdit: () => void;
+    handleDelete: () => void;
+    handleToggleCollapse: () => void;
+    isCollapsed: boolean;
+}
+
+function ActionButton({ handleEdit, handleDelete, handleToggleCollapse, isCollapsed }: ActionButtonProps) {
+    return (
+        <ActionMenu
+            className={(isOpen) =>
+                `top-0 left-full min-w-40 p-1 bg-surface-primary border border-border rounded-medium z-50 translate-x-2 shadow-md transition-all duration-300 ${isOpen ? "translate-y-0" : "opacity-0 translate-y-10"}`
+            }
+            trigger={
+                <Button intent="regular" onlyIcon={true}>
+                    <BsThreeDots />
+                </Button>
+            }
+        >
+            <ActionMenu.ActionButton
+                className={buttonStyles({ intent: "regular", width: "full" })}
+                onClick={handleEdit}
+            >
+                <BsPencilSquare />
+                <span>Edit</span>
+            </ActionMenu.ActionButton>
+            <ActionMenu.ActionButton
+                className={buttonStyles({ intent: "regular", width: "full" })}
+                onClick={handleToggleCollapse}
+            >
+                {isCollapsed ? (
+                    <>
+                        <BsArrowsExpandVertical />
+                        <span>Expand</span>
+                    </>
+                ) : (
+                    <>
+                        <BsArrowsCollapseVertical />
+                        <span>Collapse</span>
+                    </>
+                )}
+            </ActionMenu.ActionButton>
+            <ActionMenu.ActionButton
+                className={buttonStyles({ intent: "danger", width: "full" })}
+                onClick={handleDelete}
+            >
+                <BsTrash />
+                <span>Delete</span>
+            </ActionMenu.ActionButton>
+        </ActionMenu>
     );
 }
