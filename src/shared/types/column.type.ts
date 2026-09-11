@@ -4,7 +4,8 @@ export interface Column {
     projectId: string;
     cardIds: string[];
     title: string;
+    color: string;
     isCollapsed: boolean;
 }
 
-export type ColumnEdit = Pick<Column, "title">;
+export type ColumnEdit = Pick<Column, "title" | "color">;

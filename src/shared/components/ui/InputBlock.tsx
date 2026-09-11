@@ -1,7 +1,5 @@
-interface Props {
-    children: React.ReactNode;
-}
+interface Props extends React.ComponentProps<"div"> {}
 
-export function InputBlock({ children }: Props) {
-    return <div>{children}</div>;
+export function InputBlock({ children, ...props }: Props) {
+    return <div {...props}>{children}</div>;
 }

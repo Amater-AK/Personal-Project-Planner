@@ -5,6 +5,7 @@ import { InputLabel } from "@/shared/components/ui/InputLabel";
 import { Input } from "@/shared/components/ui/Input";
 import { InputError } from "@/shared/components/ui/InputError";
 import { Button } from "@/shared/components/ui/Button";
+import { ColorPicker } from "@/shared/components/ui/ColorPicker";
 
 import { type ColumnEdit } from "@/shared/types/column.type";
 
@@ -13,10 +14,11 @@ interface Props {
     onSubmit: (data: ColumnEdit) => void;
 }
 
-type FormFields = "title";
+type FormFields = "title" | "color";
+// type FormFields = keyof ColumnEdit;
 
 export function ColumnForm({ data, onSubmit }: Props) {
-    const [errors, setErrors] = useState<Record<FormFields, string>>({ title: "" });
+    const [errors, setErrors] = useState<Record<FormFields, string>>({ title: "", color: "" });
 
     function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -30,6 +32,7 @@ export function ColumnForm({ data, onSubmit }: Props) {
             return;
         }
 
+        console.log(data);
         onSubmit(data);
     }
 
@@ -41,6 +44,11 @@ export function ColumnForm({ data, onSubmit }: Props) {
                 <InputLabel htmlFor="title">Title</InputLabel>
                 <Input type="text" id="title" name="title" defaultValue={data?.title} />
                 <InputError message={errors.title} />
+            </InputBlock>
+
+            <InputBlock className="flex items-center justify-between gap-2">
+                <InputLabel htmlFor="color">Color</InputLabel>
+                <ColorPicker id="color" name="color" defaultColor={data?.color} />
             </InputBlock>
 
             <div className="flex justify-end">
