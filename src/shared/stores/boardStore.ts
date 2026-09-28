@@ -89,7 +89,6 @@ export const useBoardStore = create<BoardState>()(
                 });
             },
             deleteCardFromColumn: (id, cardId) => {
-                console.log(id, cardId);
                 set((state) => {
                     state.columns[id].cardIds = state.columns[id].cardIds.filter((cId) => cId !== cardId);
                 });

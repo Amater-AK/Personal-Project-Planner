@@ -13,7 +13,7 @@ export function OverlayColumn({ columnId }: Props) {
     return (
         <article
             className={`shrink-0 flex flex-col gap-4 ${column.isCollapsed ? "w-20" : "w-80"} h-full p-2 bg-surface-primary border border-border rounded-medium`}
-            style={column.color ? { backgroundColor: column.color } : null}
+            style={column.color ? { backgroundColor: column.color } : undefined}
         >
             <ColumnHeader column={column} handleRef={null} />
 

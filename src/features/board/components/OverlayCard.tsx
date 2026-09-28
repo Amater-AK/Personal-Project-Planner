@@ -13,7 +13,7 @@ export function OverlayCard({ cardId }: Props) {
     return (
         <article
             className="group/card relative p-2 bg-input-bg border border-input-border rounded-medium cursor-grab"
-            style={card.color ? { backgroundColor: card.color } : null}
+            style={card.color ? { backgroundColor: card.color } : undefined}
         >
             <div className="whitespace-pre-wrap">{card.text}</div>
             <footer>

@@ -28,6 +28,6 @@ export function ModalProvider() {
                 {content}
             </div>
         </Modal>,
-        document.getElementById("modals"),
+        document.getElementById("modals")!,
     );
 }

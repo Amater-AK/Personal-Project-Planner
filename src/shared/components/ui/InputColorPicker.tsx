@@ -9,7 +9,7 @@ interface ColorPickerItem {
 }
 
 interface ColorPickerProps {
-    defaultValue: string;
+    defaultValue: string | undefined;
     name: string;
     items: ColorPickerItem[];
 }

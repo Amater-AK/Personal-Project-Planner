@@ -17,6 +17,11 @@ export function ProjectPage() {
 
     // Получение данных БЕЗ подписки для обновления
     const project = getProject(pId);
+
+    useEffect(() => {
+        openProject(pId);
+    }, [openProject, pId]);
+
     if (!project) {
         return (
             <div className="flex flex-col justify-center items-center h-full px-2">
@@ -33,10 +38,6 @@ export function ProjectPage() {
             </div>
         );
     }
-
-    useEffect(() => {
-        openProject(pId);
-    }, [openProject, pId]);
 
     return (
         <div className="flex flex-col gap-4 h-full px-2">

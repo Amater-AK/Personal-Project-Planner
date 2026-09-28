@@ -9,8 +9,8 @@ import { type Project, type ProjectEdit } from "../types/project.type";
 
 interface ProjectState {
     projects: Project[];
-    getProject: (id: string) => Project;
-    openProject: (id: string) => void;
+    getProject: (id: string | undefined) => Project | undefined;
+    openProject: (id: string | undefined) => void;
     createProject: (data: ProjectEdit) => string;
     editProject: (id: string, data: ProjectEdit) => void;
     deleteProject: (id: string) => void;
@@ -22,13 +22,18 @@ export const useProjectStore = create<ProjectState>()(
             projects: Array<Project>(),
 
             getProject: (id) => {
+                if (!id) return;
+
                 const projects = get().projects;
 
                 return projects.find((project) => project.id === id);
             },
             openProject: (id) => {
                 set((state) => {
+                    if (!id) return;
                     const project = state.projects.find((project) => project.id === id);
+
+                    if (!project) return;
                     project.lastOpenedAt = Date.now();
                 });
             },

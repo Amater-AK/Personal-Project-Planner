@@ -14,7 +14,9 @@ interface TriggerInjectedProps {
     onClick: (event: React.PointerEvent) => void;
 }
 
-const MenuContext = createContext<ActionMenuContext>(null);
+const MenuContext = createContext<ActionMenuContext>({
+    closeMenu: () => {},
+});
 
 export function ActionMenu({ children, trigger, className }: ActionMenuProps) {
     const [isOpen, setIsOpen] = useState(false);

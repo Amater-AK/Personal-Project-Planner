@@ -57,7 +57,7 @@ export function Column({ columnId, index }: Props) {
         <article
             ref={ref}
             className={`shrink-0 flex flex-col gap-4 ${column.isCollapsed ? "w-20" : "w-80"} p-2 bg-surface-primary border border-border rounded-medium`}
-            style={column.color ? { backgroundColor: column.color } : null}
+            style={column.color ? { backgroundColor: column.color } : undefined}
         >
             <ColumnHeader column={column} handleRef={handleRef} />
             {!column.isCollapsed && (
