@@ -49,7 +49,7 @@ function RadioItem({ name, data, checked, onChange }: RadioItemProps) {
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const { value } = event.target;
 
-        onChange(value);
+        onChange?.(value);
     }
 
     return (
