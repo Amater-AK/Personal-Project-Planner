@@ -6,7 +6,9 @@ import { ThemeProvider } from "./providers/ThemeProvider";
 
 import { routes } from "./router/routes";
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(routes, {
+    basename: import.meta.env.BASE_URL,
+});
 
 export function App() {
     return (
