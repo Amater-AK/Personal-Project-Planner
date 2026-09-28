@@ -25,7 +25,7 @@ export const sharedStorage = {
         if (raw) {
             try {
                 fullStorage = JSON.parse(raw);
-            } catch (error) {
+            } catch {
                 fullStorage = {};
             }
         }

@@ -65,7 +65,7 @@ export function Board({ projectId }: Props) {
             }}
             onDragEnd={(event) => {
                 const { source } = event.operation;
-                if (event.canceled || source.type !== "column") return;
+                if (event.canceled || !source || source.type !== "column") return;
 
                 moveColumns(move(orderedColumnIds, event));
             }}

@@ -31,7 +31,11 @@ export function HomePage() {
 
     const filteredProjects = projects.filter((project) => searchRegex.test(project.title));
     const recentProjects = projects
-        .toSorted((a, b) => b.lastOpenedAt - a.lastOpenedAt)
+        .toSorted((a, b) => {
+            const at = a.lastOpenedAt || 0;
+            const bt = b.lastOpenedAt || 0;
+            return bt - at;
+        })
         .slice(0, 3)
         .filter((project) => project.lastOpenedAt);
 

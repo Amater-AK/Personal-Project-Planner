@@ -56,7 +56,7 @@ export function ProjectItem({ project, isRecent = false }: Props) {
         );
     }
 
-    const datetime = isRecent ? toDate(project.lastOpenedAt) : toDate(project.createdAt);
+    const datetime = isRecent && project.lastOpenedAt ? toDate(project.lastOpenedAt) : toDate(project.createdAt);
 
     return (
         <li className="group/project relative min-w-0">

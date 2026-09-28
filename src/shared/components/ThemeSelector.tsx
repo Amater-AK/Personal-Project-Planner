@@ -50,7 +50,7 @@ export function ThemeSelector() {
                 title: "Dark theme",
             },
         ];
-    }, [THEMES]);
+    }, []);
 
     return (
         <div className="flex items-center bg-input-bg border border-input-border rounded-medium">
