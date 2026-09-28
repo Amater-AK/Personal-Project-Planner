@@ -51,7 +51,7 @@ export function Card({ cardId, index, columnId }: Props) {
         openModal(
             <ConfirmDelete
                 onConfirm={() => {
-                    deleteCardFromColumn(card.columnId, card.id);
+                    deleteCardFromColumn(columnId, card.id);
                     deleteCard(card.id);
                     closeModal();
                 }}
@@ -64,7 +64,11 @@ export function Card({ cardId, index, columnId }: Props) {
 
     if (isDragging) {
         return (
-            <article ref={ref} className="p-2 border border-outline rounded-medium">
+            <article
+                ref={ref}
+                className="p-2 border border-outline rounded-medium"
+                style={card.color ? { backgroundColor: card.color } : null}
+            >
                 <div className="opacity-0 pointer-events-none">
                     <div className="whitespace-pre-wrap">{card.text}</div>
                     <footer>
@@ -81,6 +85,7 @@ export function Card({ cardId, index, columnId }: Props) {
         <article
             ref={ref}
             className="group/card relative p-2 bg-input-bg border border-input-border rounded-medium cursor-grab"
+            style={card.color ? { backgroundColor: card.color } : null}
         >
             <div className="whitespace-pre-wrap">{card.text}</div>
             <footer>

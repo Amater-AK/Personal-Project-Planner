@@ -11,7 +11,10 @@ export function OverlayCard({ cardId }: Props) {
     const datetime = toDate(card.createdAt);
 
     return (
-        <article className="group/card relative p-2 bg-input-bg border border-input-border rounded-medium cursor-grab">
+        <article
+            className="group/card relative p-2 bg-input-bg border border-input-border rounded-medium cursor-grab"
+            style={card.color ? { backgroundColor: card.color } : null}
+        >
             <div className="whitespace-pre-wrap">{card.text}</div>
             <footer>
                 <time className="grow text-xs text-text-info" dateTime={datetime}>

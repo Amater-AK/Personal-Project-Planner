@@ -36,7 +36,7 @@ export function Column({ columnId, index }: Props) {
         openModal(
             <CardForm
                 onSubmit={(data) => {
-                    const cardId = createCard(column.id, data);
+                    const cardId = createCard(data);
                     addCardToColumn(column.id, cardId);
                     closeModal();
                 }}

@@ -24,7 +24,7 @@ export interface BoardState {
     moveCards: (boardState: Board) => void;
     // Cards
     cards: Record<string, Card>;
-    createCard: (cId: string, data: CardEdit) => string;
+    createCard: (data: CardEdit) => string;
     editCard: (id: string, data: CardEdit) => void;
     deleteCard: (id: string) => void;
 }
@@ -89,6 +89,7 @@ export const useBoardStore = create<BoardState>()(
                 });
             },
             deleteCardFromColumn: (id, cardId) => {
+                console.log(id, cardId);
                 set((state) => {
                     state.columns[id].cardIds = state.columns[id].cardIds.filter((cId) => cId !== cardId);
                 });
@@ -107,11 +108,11 @@ export const useBoardStore = create<BoardState>()(
             },
             // Cards
             cards: {},
-            createCard: (cId, data) => {
+            createCard: (data) => {
                 const id = uuidv4();
 
                 set((state) => {
-                    state.cards[id] = { id, columnId: cId, ...data, createdAt: Date.now() };
+                    state.cards[id] = { id, ...data, createdAt: Date.now() };
                 });
 
                 return id;
